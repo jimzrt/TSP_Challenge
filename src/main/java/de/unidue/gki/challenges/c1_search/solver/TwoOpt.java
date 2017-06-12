@@ -60,4 +60,46 @@ public class TwoOpt {
 		// this.solution=solution;
 	}
 
+	public static Integer[] twoHalfOpt(TSPInstance instance, Integer[] solution) {
+		boolean changed;
+		do {
+			changed = false;
+			for (int i = 0; i < solution.length; i++) {
+				for (int j = i + 3; j < solution.length; j++) {
+					// Given A-B-C..D-E try A-C..D-B-E if shorter, swap.
+					long opt1_cur = instance.getDistance(solution[i],solution[i + 1]) +
+							instance.getDistance(solution[i + 1],solution[i + 2]) +
+							instance.getDistance(solution[j - 1], solution[j]);
+					long option1 = instance.getDistance(solution[i], solution[i + 2]) +
+							instance.getDistance(solution[j - 1], solution[i + 1]) +
+							instance.getDistance(solution[i + 1], solution[j]);
+					if (option1 < opt1_cur) {
+						int temp = solution[i + 1];
+						for (int m = i + 2; m < j; m++) {
+							solution[m - 1] = solution[m];
+						}
+						solution[j - 1] = temp;
+						changed = true;
+					}
+					// Given A-B..C-D-E try A-D-B..C-E if shorter, swap
+					long opt2_cur = instance.getDistance(solution[i], solution[i + 1]) +
+							instance.getDistance(solution[j - 2], solution[j - 1]) +
+							instance.getDistance(solution[j - 1], solution[j]);
+					long option2 = instance.getDistance(solution[i], solution[j - 1]) +
+							instance.getDistance(solution[j - 1], solution[i + 1]) +
+							instance.getDistance(solution[j - 2], solution[j]);
+					if (option2 < opt2_cur) {
+						int temp = solution[j - 1];
+						for (int m = j - 2; m > i; m--) {
+							solution[m + 1] = solution[m];
+						}
+						solution[i + 1] = temp;
+						changed = true;
+					}
+				}
+			}
+		} while (changed);
+		return solution;
+	}
+
 }

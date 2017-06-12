@@ -9,11 +9,11 @@ import java.util.Arrays;
 public class AntColonySolver implements TSPSolver {
 
 	static final int N_GENERATIONS = 800;
-	static final int N_ANTS = 100;
+	static final int N_ANTS = 5;
 	int N;
 	double ALPHA = 2.0;
 	double BETA = 6.0;
-	double RHO = 0.15;
+	double RHO = 0.1;
 	double[][] tau;
 	double[][] copyTau;
 	final Long[][] distance;
@@ -55,7 +55,7 @@ public class AntColonySolver implements TSPSolver {
 				// Initialise tour
 				for (int j = 0; j < N; j++) {
 					visited[j] = false;
-					tour[j] = -1;
+				//	tour[j] = -1;
 				}
 
 				tour[0] = 0;
@@ -91,12 +91,13 @@ public class AntColonySolver implements TSPSolver {
 						}
 					}
 
+
 					tour[j] = k;
 					visited[k] = true;
 				}
 				tour[N] = 0;
 
-				TwoOpt.optimize(instance, tour, false);
+				TwoOpt.twoHalfOpt(instance,TwoOpt.optimize(instance, tour, false));
 
 
 				// Save best tour so far
@@ -125,7 +126,7 @@ public class AntColonySolver implements TSPSolver {
 			generationCounter++;
 		}
 
-		adjustPheremone(instance, best_tour);
+		//adjustPheremone(instance, best_tour);
 		//System.out.println(Arrays.deepToString(copyTau));
 		return best_tour;
 
@@ -141,8 +142,8 @@ public class AntColonySolver implements TSPSolver {
 		double d = TSPEvaluator.getRoundtripDistance(instance, tour);
 
 		for (i = 1; i < N; i++) {
-			copyTau[tour[i - 1]][tour[i]] += (3.0 / d);
-			copyTau[tour[i]][tour[i - 1]] += (3.0 /d);
+			copyTau[tour[i - 1]][tour[i]] += (10.0 / d);
+			copyTau[tour[i]][tour[i - 1]] += (10.0 /d);
 		}
 	}
 

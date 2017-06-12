@@ -11,8 +11,8 @@ public class Greedy2Opt implements TSPSolver {
 
 	public Integer[] solve(TSPInstance instance) throws Exception {
 		
-		
-		return  TwoOpt.optimize(instance, new GreedyBestFirstSolver().solve(instance), false);
+		return TwoOpt.twoHalfOpt(instance, TwoOpt.optimize(instance, new GreedyBestFirstSolver().solve(instance), false));
+		//return  TwoOpt.optimize(instance, new GreedyBestFirstSolver().solve(instance), false);
 	}
 
 
