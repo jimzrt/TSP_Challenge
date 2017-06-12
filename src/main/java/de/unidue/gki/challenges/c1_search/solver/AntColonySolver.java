@@ -1,5 +1,6 @@
 package de.unidue.gki.challenges.c1_search.solver;
 
+import de.unidue.gki.challenges.c1_search.CheckTspProblem;
 import de.unidue.gki.challenges.c1_search.core.TSPInstance;
 import de.unidue.gki.challenges.c1_search.evaluation.TSPEvaluator;
 
@@ -7,12 +8,12 @@ import java.util.Arrays;
 
 public class AntColonySolver implements TSPSolver {
 
-	static final int N_GENERATIONS = 15;
-	static final int N_ANTS = 10;
+	static final int N_GENERATIONS = 800;
+	static final int N_ANTS = 100;
 	int N;
 	double ALPHA = 2.0;
 	double BETA = 6.0;
-	double RHO = 0.02;
+	double RHO = 0.15;
 	double[][] tau;
 	double[][] copyTau;
 	final Long[][] distance;
@@ -28,7 +29,7 @@ public class AntColonySolver implements TSPSolver {
 		// set up pheromones
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++)
-				copyTau[i][j] = 0.1;
+				copyTau[i][j] = 0.2;
 		}
 
 	}
@@ -41,16 +42,15 @@ public class AntColonySolver implements TSPSolver {
 
 		long min_tour = Long.MAX_VALUE;
 
-		//copyTau = tau.clone();
 
-		int P = N;
-		if (P > N_GENERATIONS)
-			P = N_GENERATIONS;
 
-		/* Main loop starts here */
-		int t1 = 0;
-		while (t1 < P) {
-			for(int i = 0; i < N_ANTS;  i++) {
+
+		int generationCounter = 0;
+		while (generationCounter < N_GENERATIONS) {
+
+			System.out.println("Generation " + generationCounter);
+
+				for(int i = 0; i < N_ANTS;  i++) {
 
 				// Initialise tour
 				for (int j = 0; j < N; j++) {
@@ -110,6 +110,8 @@ public class AntColonySolver implements TSPSolver {
 						best_tour[j] = tour[j];
 
 
+					CheckTspProblem.printResults(instance, best_tour);
+
 					//	adjustPheremone(instance, tour);
 				}
 
@@ -120,7 +122,7 @@ public class AntColonySolver implements TSPSolver {
 			evaporatePheremone();
 			// adjust_pheremone (instance,TwoOpt.optimize(instance,tour,true));
 			//tau = copyTau.clone();
-			t1++;
+			generationCounter++;
 		}
 
 		adjustPheremone(instance, best_tour);
@@ -139,8 +141,8 @@ public class AntColonySolver implements TSPSolver {
 		double d = TSPEvaluator.getRoundtripDistance(instance, tour);
 
 		for (i = 1; i < N; i++) {
-			copyTau[tour[i - 1]][tour[i]] += (1.0 / d);
-			copyTau[tour[i]][tour[i - 1]] += (1.0 /d);
+			copyTau[tour[i - 1]][tour[i]] += (3.0 / d);
+			copyTau[tour[i]][tour[i - 1]] += (3.0 /d);
 		}
 	}
 

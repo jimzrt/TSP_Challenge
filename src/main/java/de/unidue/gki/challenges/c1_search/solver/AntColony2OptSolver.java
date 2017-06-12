@@ -20,22 +20,19 @@ public class AntColony2OptSolver implements TSPSolver {
 		System.out.println("Initial Solution: ");
 		CheckTspProblem.printResults(instance, bestsolution);
 		System.out.println(" ");
-		long bestdistance = TSPEvaluator.getRoundtripDistance(instance,
-				bestsolution);
-		long distance;
+	//	long bestdistance = TSPEvaluator.getRoundtripDistance(instance,
+	//			bestsolution);
+	//	long distance;
+/*
 		int i = 0;
 		while (i <= 500) {
 			i++;
-			if(i == 130)
-				System.out.println("ye");
+
 
 			System.out.println("Durchlauf " + i);
-			try {
 				solution = ant.solve(instance);
 
-			} catch (Throwable e) {
-				System.out.println(e.getMessage());
-			}
+
 
 			distance = TSPEvaluator.getRoundtripDistance(instance, solution);
 			if (distance < bestdistance) {
@@ -45,6 +42,7 @@ public class AntColony2OptSolver implements TSPSolver {
 
 			}
 		}
+*/
 
 		return bestsolution;
 
