@@ -1,12 +1,5 @@
 package de.unidue.gki.challenges.c1_search;
 
-import java.io.BufferedWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import de.unidue.gki.challenges.c1_search.core.TSPInstance;
 import de.unidue.gki.challenges.c1_search.core.TSPParser;
@@ -14,7 +7,10 @@ import de.unidue.gki.challenges.c1_search.core.TSPUtil;
 import de.unidue.gki.challenges.c1_search.evaluation.TSPEvaluator;
 import de.unidue.gki.challenges.c1_search.evaluation.TSPValidator;
 import de.unidue.gki.challenges.c1_search.solver.*;
-import mdsj.MDSJ;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CheckTspProblem {
 
